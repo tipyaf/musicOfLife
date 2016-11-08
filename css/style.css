@@ -1,0 +1,136 @@
+body{
+        max-width: 2000px;
+        max-height: 700px;
+        margin: 0;
+}
+td{
+        display: table-cell;
+        vertical-align: middle !important;
+}
+header{
+        height: 100vh;
+        background-image: url("../img/bkg.jpg");
+        background-position: center;
+        background-size: cover;
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: all 1.5s;
+}
+.flex-col{
+        display: flex;
+        flex-direction: column;
+}
+.flex-row{
+        display: flex;
+        flex-direction: row;
+}
+.space-between{
+         justify-content: space-between;
+ }
+.space-around{
+        justify-content: space-around;
+}
+.justify-center{
+        justify-content: center;
+}
+.align-items-center{
+        align-items: center;
+}
+.little-header{
+        height: 20vh;
+        transition: all 1.5s;
+}
+.search{
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+}
+::-webkit-input-placeholder {
+        /*display: flex;*/
+        /*flex-direction: column;*/
+        /*justify-content: center;*/
+        /*align-items: center;*/
+        color: #d6d2d5;
+        font-family: Aparajita;
+        font-size: 28px;
+        font-style: italic;
+        font-weight: lighter;
+        text-align: center;
+
+}
+.search input{
+        width: 50%;
+        /* height: 54px; */
+        background-color: rgba(3, 169, 244, 0.38);
+        border: 1px solid #03a9f4;
+        padding: 1px 20px;
+        color: white;
+        font-size: 35px;
+        font-weight: bold;
+        text-align: center;
+}
+.search button{
+        padding: 17px;
+        margin-left: -2px;
+        background-color: #03a9f4 !important;
+        box-shadow: none;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+}
+.search button:hover{
+        background-color: #03a9f0 !important;
+}
+.search button[disabled]{
+        background-color: rgba(3, 169, 244, 0.9) !important;
+}
+.search select{
+        height: 54px;
+        background-color: rgba(3, 169, 244, 0.4);
+        border: 1px solid #03a9f4;
+        color: white;
+        border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+        font-weight: bold;
+        margin: 0px -1px 0px 0;
+}
+.bkg-white{
+        background-color: white;
+}
+.down{
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+}
+.my-result-container{
+        height: 80vh;
+        /*background-image: url("https://pixabay.com/static/uploads/photo/2016/03/03/17/25/wood-1234667_960_720.jpg");*/
+        background-attachment: fixed;
+        background-size: cover;
+}
+.title-panel-result{
+        width: 100%;
+        margin-left: 2%;
+}
+.title-panel-result h3 {
+        font-size: 23px;
+}
+.transition{
+        transition: all 2s;
+}
+.category-text{
+        font-size: 11px;
+        font-weight: bold;
+}
+.panel-body{
+        min-height: 0;
+}
+.panel-body-full{
+        min-height: 50vh;
+        transition: all 1s;
+}
