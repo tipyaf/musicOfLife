@@ -1,7 +1,7 @@
 /**
  * Created by yannickbenchimol on 06/12/2016.
  */
-ExampleApp.controller('ExampleController', function ($scope, client, esFactory, $http) {
+ExampleApp.controller('ExampleController', function ($scope, client, esFactory, DataResult) {
     $scope.viewTracks = false;
     $scope.onSearch = function () {
         switch ($scope.searchType) {
@@ -61,8 +61,9 @@ ExampleApp.controller('ExampleController', function ($scope, client, esFactory, 
             console.log($scope.viewTracks, 'entrée');
             $scope.viewTracks = true;
             console.log($scope.viewTracks, 'sortie');
-        }
-        $http.post('http://localhost:9200/music2/transactions/_search', recherche)
+        };
+
+        DataResult.getResults(recherche)
             .then(function (data) {
                 $scope.nbResponses = data.data.hits.total;
                 $scope.responses = data.data.hits.hits;
