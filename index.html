@@ -13,24 +13,8 @@
   
   <link rel="stylesheet" href="css/style.css">
 </head>
-<!-- boot angular with the ExampleApp module -->
 <body ng-app="ExampleApp">
-  <!-- attach the ExampleController to our main content -->
   <div ng-controller="ExampleController" >
-    <!--<h1>Angular + Elasticsearch</h1>-->
-
-    <!--&lt;!&ndash; if there is an error, display its message &ndash;&gt;-->
-    <!--<div ng-if="error" class="alert alert-danger" role="alert">{{error.message}}</div>-->
-
-    <!--&lt;!&ndash; if clusterState is available, display it as formatted json &ndash;&gt;-->
-    <!--<div ng-if="clusterState" class="panel panel-default">-->
-      <!--<div class="panel-heading">-->
-        <!--<h3 class="panel-title">Cluster State</h3>-->
-      <!--</div>-->
-      <!--<div class="panel-body">-->
-        <!--<pre>{{clusterState | json}}</pre>-->
-      <!--</div>-->
-    <!--</div>-->
     <header ng-init="onTop = false" ng-class="{'little-header': onTop && nbResponses > 0}">
       <!--<h1 class="alert-danger alert">Votre recherche</h1>-->
       <form name="searchForm" class="search form-inline">
@@ -87,25 +71,14 @@
             </div>
           </div>
 
-
-
-
             </div>
-
-
-
 
       </div>
 
-      <!--<div class="text-center" ng-if="onTop && nbResponses > 0">-->
-        <!--<button type="button" class="btn btn-raised btn-info" ng-csv="responses" filename="resultat_de_la_recherche.csv"><span class="glyphicon glyphicon-download-alt"></span>  Exporter en .csv</button>-->
+
       </div>
     </div>
   </div>
-  <!--<div class="playlist-container" ng-controller="playlist">-->
-
-  <!--</div>-->
-  <!-- include npm modules in proper order -->
   <script src="node_modules/jquery/dist/jquery.js"></script>
   <script src="node_modules/angular/angular.min.js"></script>
   <script src="node_modules/elasticsearch-browser/elasticsearch.angular.min.js"></script>
@@ -116,143 +89,10 @@
   <script src="node_modules/bootstrap-material-design/dist/js/material.js"></script>
   <script src="node_modules/bootstrap-material-design/dist/js/ripples.js"></script>
 
-  <!-- app code starts is here -->
-  <script>
-    
-    // App module
-    //
-    // The app module will contain all of the components the app needs (directives,
-    // controllers, services, etc.). Since it will be using the components within
-    // the elasticsearch module, define it a dependency.
-    var ExampleApp = angular.module('ExampleApp', ['elasticsearch',
-      'luegg.directives',
-      'ngSanitize',
-//      'ngCsv',
-      'ngAnimate']);
-
-    // Service
-    //
-    // esFactory() creates a configured client instance. Turn that instance
-    // into a service so that it can be required by other parts of the application
-    ExampleApp.service('client', function (esFactory) {
-      return esFactory({
-        host: 'http://localhost:9200',
-        apiVersion: '2.3',
-        log: 'trace'
-      });
-    });
-
-    // Controller
-    ExampleApp.controller('ExampleController', function ($scope, client, esFactory, $http) {
-      $scope.viewTracks = false;
-      $scope.onSearch = function () {
-        switch ($scope.searchType) {
-          case "all":
-            var recherche = {
-              "query": {
-                "query_string": {
-                  "query": $scope.input + "~"
-                }
-              }
-            }
-            break;
-          case "artiste":
-           var recherche = {
-             "query": {
-               "match": {
-                 "artist": $scope.input + "~"
-               }
-             }
-           }
-            break;
-          case "genre":
-            var recherche = {
-              "query": {
-                "match": {
-                  "category": $scope.input + "~"
-                }
-              }
-            }
-            break;
-          case "album":
-            var recherche = {
-              "query": {
-                "match": {
-                  "title": $scope.input + "~"
-                }
-              }
-            }
-            break;
-          default:
-            var recherche = {
-              "query": {
-                "query_string": {
-                  "query": $scope.input + "~"
-                }
-              }
-            }
-        }
-//        var recherche = {
-//          "query": {
-//            "query_string": {
-//              "query": $scope.input
-//            }
-//          }
-//        }
-        $scope.onViewTracks = function () {
-          console.log($scope.viewTracks, 'entrée');
-          $scope.viewTracks = true;
-          console.log($scope.viewTracks, 'sortie');
-        }
-        $http.post('http://localhost:9200/music2/transactions/_search', recherche)
-                .then(function (data) {
-                  $scope.nbResponses = data.data.hits.total;
-                  $scope.responses = data.data.hits.hits;
-                  console.log(data, 'reponse recherche')
-
-                }, function (err) {
-                  console.log(err, 'error')
-                })
-      }
-
-      $.material.init();
-      client.cluster.state({
-        metric: [
-          'cluster_name',
-          'nodes',
-          'master_node',
-          'version'
-        ]
-      })
-      .then(function (resp) {
-        $scope.clusterState = resp;
-        $scope.error = null;
-      })
-      .catch(function (err) {
-        $scope.clusterState = null;
-        $scope.error = err;
-
-        // if the err is a NoConnections error, then the client was not able to
-        // connect to elasticsearch. In that case, create a more detailed error
-        // message
-        if (err instanceof esFactory.errors.NoConnections) {
-          $scope.error = new Error('Unable to connect to elasticsearch. ' +
-            'Make sure that it is running and listening at http://localhost:9200');
-        }
-      });
-
-      
-    });
-
-    //    Filter
-    // (pour rentrer l'url youtube et avoir l'embeded)
-//    ExampleApp.filter('trusted', ['$sce', function ($sce) {
-//      return function(url) {
-//        var video_id = url.split('v=')[1].split('&')[0];
-//        return $sce.trustAsResourceUrl("https://www.youtube.com/embed/" + video_id);
-//      };
-//    }]);
-  </script>
+  <script src="js/app.js"></script>
+  <script src="js/controllers/result.controller.js"></script>
+  
+  <script src="js/services/elasticSearch.service.js"></script>
 
 </body>
 </html>
